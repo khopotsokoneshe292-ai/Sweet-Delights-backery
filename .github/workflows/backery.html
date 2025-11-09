@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Delights Bakery</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto&display=swap" rel="stylesheet">
+<style>
+  /* --- General Styles --- */
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Roboto', sans-serif;background:#fff0f3;color:#333;line-height:1.6;scroll-behavior:smooth;}
+  h1,h2,h3{font-family:'Playfair Display',serif;}
+
+  /* --- Navigation Bar --- */
+  header{background:#ffccd5;padding:15px 20px;box-shadow:0 3px 6px rgba(0,0,0,0.1);position:sticky;top:0;z-index:1000;}
+  .container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+  .logo{font-size:28px;color:#d96c75;font-weight:bold;}
+  nav ul{list-style:none;display:flex;gap:20px;}
+  nav a{text-decoration:none;color:#333;font-weight:bold;padding:6px 10px;border-radius:5px;transition:0.3s;}
+  nav a:hover{background-color:#d96c75;color:#fff;}
+
+  /* --- Hero Section --- */
+  .hero{background:url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;height:80vh;display:flex;justify-content:center;align-items:center;text-align:center;color:#fff;position:relative;}
+  .hero::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);}
+  .hero-text{position:relative;z-index:2;animation:fadeIn 2s ease-out;}
+  .hero-text h2{font-size:48px;margin-bottom:20px;}
+  .hero-text p{font-size:20px;margin-bottom:30px;}
+  .hero .btn{padding:12px 30px;background-color:#d96c75;color:#fff;border:none;border-radius:5px;text-decoration:none;font-weight:bold;transition:background 0.3s;}
+  .hero .btn:hover{background-color:#c15863;}
+
+  /* --- About Section --- */
+  .about{padding:80px 20px;text-align:center;background-color:#fff6f9;}
+  .about h2{margin-bottom:20px;color:#d96c75;}
+  .about p{max-width:800px;margin:0 auto;}
+
+  /* --- Products Section --- */
+  .products{padding:80px 20px;text-align:center;}
+  .products h2{margin-bottom:40px;color:#d96c75;}
+  .product-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+  .product-card{background-color:#fff0f3;padding:20px;border-radius:10px;width:300px;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:transform 0.3s, box-shadow 0.3s;}
+  .product-card:hover{transform:scale(1.05);box-shadow:0 10px 20px rgba(0,0,0,0.2);}
+  .product-card img{width:100%;border-radius:10px;margin-bottom:15px;}
+  .product-card h3{margin-bottom:10px;color:#d96c75;}
+  .product-card .price{font-weight:bold;color:#333;}
+
+  /* --- Pricing Section --- */
+  .pricing{padding:80px 20px;text-align:center;background:#fff6f9;}
+  .pricing h2{color:#d96c75;margin-bottom:40px;}
+  .pricing-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+  .pricing-card{background:#fff0f3;padding:20px;border-radius:10px;width:250px;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:transform 0.3s;}
+  .pricing-card:hover{transform:scale(1.05);}
+  .pricing-card h3{color:#d96c75;margin-bottom:15px;}
+  .pricing-card p{margin-bottom:15px;}
+  .pricing-card .price{font-weight:bold;font-size:22px;color:#333;}
+
+  /* --- Testimonials Section --- */
+  .testimonials{padding:80px 20px;background-color:#fff6f9;text-align:center;}
+  .testimonials h2{color:#d96c75;margin-bottom:40px;}
+  .testimonial-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+  .testimonial-card{background-color:#fff0f3;padding:20px;border-radius:10px;width:300px;box-shadow:0 5px 15px rgba(0,0,0,0.1);font-style:italic;}
+  .testimonial-card p{margin-bottom:15px;}
+  .testimonial-card h4{color:#d96c75;font-weight:bold;}
+
+  /* --- Contact Section --- */
+  .contact{padding:80px 20px;text-align:center;}
+  .contact h2{margin-bottom:20px;color:#d96c75;}
+  .contact form{max-width:500px;margin:20px auto 0 auto;display:flex;flex-direction:column;gap:15px;}
+  .contact input,.contact textarea{padding:12px;border-radius:5px;border:1px solid #ccc;resize:none;font-family:'Roboto',sans-serif;}
+  .contact button{padding:12px;background-color:#d96c75;color:#fff;border:none;border-radius:5px;font-weight:bold;cursor:pointer;transition:background 0.3s;}
+  .contact button:hover{background-color:#c15863;}
+
+  /* --- Newsletter Section --- */
+  .newsletter{padding:50px 20px;text-align:center;background:#fff0f3;}
+  .newsletter input{padding:12px;width:250px;border-radius:5px;border:1px solid #ccc;margin-right:10px;}
+  .newsletter button{padding:12px 20px;background:#d96c75;color:#fff;border:none;border-radius:5px;font-weight:bold;cursor:pointer;transition:background 0.3s;}
+  .newsletter button:hover{background:#c15863;}
+
+  /* --- Footer --- */
+  footer{background-color:#d96c75;color:#fff;text-align:center;padding:20px;}
+
+  /* --- Floating Order Button --- */
+  .order-btn{position:fixed;bottom:30px;right:30px;background-color:#d96c75;color:#fff;padding:15px 20px;border-radius:50px;font-weight:bold;text-decoration:none;box-shadow:0 5px 15px rgba(0,0,0,0.2);transition:transform 0.3s, background 0.3s;z-index:1000;animation: pulse 2s infinite;}
+  
+  /* Pulse animation for Order Now button */
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+    50% { transform: scale(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.3);}
+    100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+  }
+
+  /* --- Order Form Total Price --- */
+  .total-price{font-weight:bold;color:#333;font-size:18px;margin-top:10px;}
+
+  /* --- Order Modal --- */
+  .modal { display: none; position: fixed; z-index: 2000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.5);}
+  .modal-content { background-color: #fff0f3; margin: 15% auto; padding: 30px; border-radius: 15px; max-width: 500px; text-align: center; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform: translateY(-50px); animation: fadeInModal 0.5s forwards;}
+  .modal-content h2 { color:#d96c75; margin-bottom:15px; }
+  .modal-content p { margin-bottom:20px; }
+  .modal-content .close, #closeBtn { background-color:#d96c75; color:#fff; border:none; padding:10px 20px; border-radius:10px; font-weight:bold; cursor:pointer; transition:background 0.3s; }
+  .modal-content .close:hover, #closeBtn:hover { background-color:#c15863; }
+
+  @keyframes fadeInModal { to { opacity:1; transform:translateY(0);} }
+
+  /* --- Animations --- */
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+  /* --- Responsive --- */
+  @media(max-width:768px){
+    .product-grid,.testimonial-grid,.pricing-grid{flex-direction:column;align-items:center;}
+    .hero-text h2{font-size:36px;}
+    .hero-text p{font-size:18px;}
+    nav ul{flex-direction:column;gap:10px;}
+    .newsletter input{width:100%;margin-bottom:10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Header / Navigation -->
+<header>
+  <div class="container">
+    <h1 class="logo">Sweet Delights</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#order">Order</a></li>
+        <li><a href="#delivery">Delivery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <div class="hero-text">
+    <h2>Freshly Baked Happiness Every Day</h2>
+    <p>Delicious pastries, cakes, and breads made with love.</p>
+    <a href="#products" class="btn">Explore Our Menu</a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about">
+  <div class="container">
+    <h2>About Sweet Delights</h2>
+    <p>At Sweet Delights Bakery, we believe in baking smiles. Our bakery uses the finest ingredients to craft mouthwatering cakes, croissants, and cupcakes. Whether it's a special celebration or your daily treat, we’re here to make your moments sweeter.</p>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section id="products" class="products">
+  <div class="container">
+    <h2>Our Bestsellers</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="Dark Chocolate Cake.jpg" alt="Dark Chocolate Cake.jpg">
+        <h3>Chocolate Cake</h3>
+        <p>Rich, moist chocolate cake topped with creamy frosting. Perfect for celebrations.</p>
+        <span class="price">M150</span>
+      </div>
+      <div class="product-card">
+        <img src="Buttery.jpeg" alt="Buttery.jpeg">
+        <h3>Buttery Croissant</h3>
+        <p>Flaky, buttery croissants made fresh every morning. Ideal for breakfast or snacks.</p>
+        <span class="price">M50</span>
+      </div>
+      <div class="product-card">
+        <img src="vanilla.jpg" alt="vanilla.jpg">
+        <h3>Vanilla Cupcake</h3>
+        <p>Soft and fluffy cupcakes with a creamy vanilla frosting. A treat for everyone.</p>
+        <span class="price">M20</span>
+      </div>
+
+        <div class="product-card">
+        <img src="Carrotcake.jpeg" alt="Carrotcake.jpeg">
+        <h3>Carrotcake</h3>
+        <p>Moist, rich, and perfectly spiced—carrot cake is comfort in every crumb.”.</p>
+        <span class="price">M130</span>
+      </div>
+
+       <div class="product-card">
+        <img src="Donuts.jpg" alt="Donuts.jpg">
+        <h3>Donuts</h3>
+        <p>A delicate balance of crisp layers and buttery richness, pastry is the soul of fine baking.</p>
+        <span class="price">M60</span>
+      </div>
+
+       <div class="product-card">
+        <img src="Pastery.jpg" alt="Pastery.jpg">
+        <h3>Pastery</h3>
+        <p>This is a donut. It is very sweet, and very good. But if you’ve never tasted a donut, you wouldn’t really know how sweet and how good a donut is.”</p>
+        <span class="price">M30</span>
+      </div>
+
+      <div class="product-card">
+        <img src="pizza.jpg" alt="pizza.jpg">
+        <h3>Pizza</h3>
+        <p>A warm pizza box on your lap is the world’s simplest joy.”</p>
+        <span class="price">M68</span>
+      </div>
+
+<div class="product-card">
+        <img src="profiterole.jpg" alt="profiterole.jpg">
+        <h3>Profiterole</h3>
+        <p>One bite, and you’re in Paris</p>
+        <span class="price">M45</span>
+      </div>
+
+      <div class="product-card">
+        <img src="pancakes.png" alt="pancakes.png">
+        <h3>Pancake</h3>
+        <p>Pancakes are a crowd-pleaser—easy to prepare, easy to personalize, and perfect for communal dining.</p>
+        <span class="price">M45</span>
+      </div>
+
+      <div class="product-card">
+        <img src="bagels.jpg" alt="pancakes.jpg">
+        <h3>Bagels</h3>
+        <p>A bagel is a circle of comfort—golden, warm, and endlessly customizable. It’s a canvas for flavor and a symbol of morning rituals</p>
+        <span class="price">M15</span>
+      </div>
+
+        <div class="product-card">
+        <img src="Baked bread.jpeg" alt="Baked bread.jpeg">
+        <h3>Baked Bread</h3>
+        <p>Bread is not just food.
+It’s memory. It’s welcome. It’s a quiet promise:
+You are not alone. Sit. Eat. Be well.</p>
+        <span class="price">M12</span>
+      </div>
+
+<div class="product-card">
+        <img src="cinnamonroll cake.jpg" alt="Baked bread.jpg">
+        <h3>Cinnamonroll Cake</h3>
+        <p>A golden cake swirled with cinnamon dreams, kissed by brown sugar and draped in vanilla glaze. It’s the warmth of a morning hug, the sweetness of shared stories.</p>
+        <span class="price">M30</span>
+      </div>
+
+      <div class="product-card">
+        <img src="muffins.jpg" alt="muffins.jpg">
+        <h3>Muffins</h3>
+        <p>A muffin is a morning hug in edible form—golden-topped, soft-hearted, and bursting with flavor. Whether studded with berries or swirled with spice, it’s a handheld delight that invites pause and pleasure.</p>
+        <span class="price">M30</span>
+      </div>
+
+      <div class="product-card">
+        <img src="pie.jpg" alt="pie.jpg">
+        <h3>Pie</h3>
+        <p>Golden pastry cradles a heart of spiced fruit or savory comfort. Whether sweet or hearty, a slice of pie is a slice of home.</p>
+        <span class="price">M25</span>
+      </div>
+
+      <div class="product-card">
+        <img src="cookies.jpg" alt="cookies.jpg">
+        <h3>Cookies</h3>
+        <p>A cookie is a bite-sized celebration—golden, sweet, and full of personality.</p>
+        <span class="price">M4 each</span>
+      </div>
+
+      <div class="product-card">
+        <img src="tart.jpg" alt="tart.jpg">
+        <h3>Tart</h3>
+        <p>A tart is a canvas of flavor—crisp pastry cradling vibrant fillings, from sun-kissed fruits to creamy custards. It’s elegance you can eat.</p>
+        <span class="price">M35</span>
+      </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="pricing">
+  <div class="container">
+    <h2>Pricing Menu</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Chocolate Cake</h3>
+        <p>Serves 8-10 people, rich and moist.</p>
+        <span class="price">M150</span>
+      </div>
+      <div class="pricing-card">
+        <h3>Buttery Croissant</h3>
+        <p>Each croissant is freshly baked every morning.</p>
+        <span class="price">M50</span>
+      </div>
+      <div class="pricing-card">
+        <h3>Vanilla Cupcake</h3>
+        <p>Soft cupcakes with creamy frosting, perfect for kids.</p>
+        <span class="price">M20</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials">
+  <div class="container">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>"The chocolate cake was divine! Everyone at the party loved it. Highly recommend!"</p>
+        <h4>- Emily R.</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>"Best croissants I've ever had. Perfectly flaky and buttery every time."</p>
+        <h4>- Daniel K.</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>"Vanilla cupcakes were so soft and tasty. My kids adored them!"</p>
+        <h4>- Sarah L.</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Signup -->
+<section class="newsletter">
+  <h2>Subscribe to Our Newsletter</h2>
+  <p>Get updates on new products, special deals, and bakery tips!</p>
+  <form>
+    <input type="email" placeholder="Enter your email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- Order Section -->
+<section id="order">
+  <div class="container">
+    <h2>Place Your Order</h2>
+    <p>Fill out the form below to place your bakery order. We'll confirm your order via email or phone.</p>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <input type="tel" placeholder="Your Phone Number" required>
+      <select required>
+        <option value="">--Choose a Product--</option>
+        <option value="25">Chocolate Cake - M150</option>
+        <option value="3">Vanilla Cupcake - M20</option>
+        <option value="5">Buttery Croissant - M50</option>
+      </select>
+      <input type="number" placeholder="Quantity" min="1" required>
+      <textarea placeholder="Delivery Address" rows="4" required></textarea>
+      <textarea placeholder="Additional Notes (optional)" rows="3"></textarea>
+      <span class="total-price">Total: M0</span>
+      <button type="submit">Submit Order</button>
+    </form>
+  </div>
+</section>
+
+<!-- Delivery Section -->
+<section id="delivery" class="about">
+  <div class="container">
+    <h2>Delivery Information</h2>
+    <ul>
+      <li>Delivery Areas: Local city and surrounding neighborhoods</li>
+      <li>Delivery Hours: 8:00 AM – 6:00 PM, Monday to Saturday</li>
+      <li>Delivery Fee: M5 for local delivery; free for orders above M50</li>
+      <li>Please place your order at least 24 hours in advance for cakes and large orders.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Sweet Delights Bakery. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Floating Order Button -->
+<a href="#order" class="order-btn">Order Now</a>
+
+<!-- Order Confirmation Modal -->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeBtn">Close</span>
+    <div id="modalText"></div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+const form = document.querySelector('#order form');
+const productSelect = form.querySelector('select');
+const quantityInput = form.querySelector('input[type="number"]');
+const totalDisplay = form.querySelector('.total-price');
+
+// Modal elements
+const modal = document.getElementById("orderModal");
+const modalText = document.getElementById("modalText");
+const closeBtn = document.getElementById("closeBtn");
+const spanClose = document.querySelector(".modal .close");
+
+// Update total dynamically
+function updateTotal() {
+  const price = parseFloat(productSelect.value) || 0;
+  const quantity = parseInt(quantityInput.value) || 0;
+  const total = price * quantity;
+  totalDisplay.textContent = 'Total: M' + total.toFixed(2);
+  return total;
+}
+productSelect.addEventListener('change', updateTotal);
+quantityInput.addEventListener('input', updateTotal);
+
+// Handle form submission
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = form.querySelector('input[type="text"]').value;
+  const email = form.querySelector('input[type="email"]').value;
+  const phone = form.querySelector('input[type="tel"]').value;
+  const productName = productSelect.options[productSelect.selectedIndex].text;
+  const quantity = quantityInput.value;
+  const total = updateTotal();
+  const address = form.querySelector('textarea').value;
+
+  modalText.innerHTML = `
+    Hello <strong>${name}</strong>!<br><br>
+    Your order has been received:<br>
+    <strong>Product:</strong> ${productName}<br>
+    <strong>Quantity:</strong> ${quantity}<br>
+    <strong>Total:</strong> $${total.toFixed(2)}<br>
+    <strong>Delivery Address:</strong> ${address}<br>
+    We will contact you at ${email} or ${phone} to confirm your order.<br><br>
+    🍰 Sweet Delights Bakery
+  `;
+  modal.style.display = "block";
+  modal.querySelector('.modal-content').style.animation = 'fadeInModal 0.5s forwards';
+  form.reset();
+  updateTotal();
+});
+
+// Close modal
+closeBtn.onclick = spanClose.onclick = function() { modal.style.display = "none"; }
+window.onclick = function(event) { if(event.target == modal) modal.style.display = "none"; }
+</script>
+
+</body>
+</html>
